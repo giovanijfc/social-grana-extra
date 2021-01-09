@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "Sofia Light";
+  src: local("Sofia-Light"),
+    url("./assets/fonts/Sofia-Light.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Sofia Regular";
+  src: local("Sofia-Regular"),
+    url("./assets/fonts/Sofia-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Sofia Medium";
+  src: local("Sofia-Medium"),
+    url("./assets/
