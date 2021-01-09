@@ -3,10 +3,21 @@ import styled from "styled-components";
 import COLORS from "../styles/colors";
 import { SIZE, FONT_WEIGHT, getFontSize, getFontWeight } from "./Text";
 
-export const Button = ({ type, label, onClick, isLoading }) => {
+export const Button = ({
+  styleButton,
+  style,
+  type,
+  label,
+  onClick,
+  isLoading,
+}) => {
   return (
-    <Container>
-      <StyledButton onClick={onClick} type={type || "button"}>
+    <Container style={style}>
+      <StyledButton
+        style={styleButton}
+        onClick={onClick}
+        type={type || "button"}
+      >
         {isLoading ? "Processando" : label}
       </StyledButton>
     </Container>
@@ -14,9 +25,11 @@ export const Button = ({ type, label, onClick, isLoading }) => {
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 60px;
-  padding: 5px 10px 5px 10px;
+  height: 50px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -25,6 +38,7 @@ const StyledButton = styled.button`
   height: 100%;
   justify-content: center;
   align-items: center;
+  padding: 0px 20px 0px 20px;
   background-color: ${COLORS.primary};
   color: ${COLORS.white};
   font-size: ${getFontSize(SIZE.extraRegular)};
@@ -36,4 +50,8 @@ const StyledButton = styled.button`
   ${() => {
     return getFontWeight(FONT_WEIGHT.medium);
   }}
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

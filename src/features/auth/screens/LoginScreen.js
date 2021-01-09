@@ -95,4 +95,5 @@ const WrapperButtonsOptions = styled.div`
   display: flex;
   width: 100%;
   margin-top: 35px;
+  justify-content: space-around;
 `;

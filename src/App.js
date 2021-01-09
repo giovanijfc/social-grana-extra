@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { firebaseAuth } from "./services/firebase";
 import RoutesContext from "./routes/RoutesContext";
 import { useRoutes } from "./routes/useRoutes";
-import { Text } from "./components/Text";
+import { Text, SIZE, FONT_WEIGHT } from "./components/Text";
 import { Routes } from "./routes/Routes";
+import COLORS from "./styles/colors";
 
 const App = () => {
   const routes = useRoutes();
@@ -26,7 +27,15 @@ const App = () => {
     <RoutesContext.Provider value={{ ...routes }}>
       <Container>
         {routes.isAuthenticated === undefined ? (
-          <Text>Processando...</Text>
+          <AreaCenter>
+            <Text
+              fontWeight={FONT_WEIGHT.bold}
+              size={SIZE.extraMedium}
+              color={COLORS.white}
+            >
+              Processando...
+            </Text>
+          </AreaCenter>
         ) : (
           <Routes />
         )}
@@ -37,7 +46,17 @@ const App = () => {
 
 const Container = styled.div`
   width: 600px;
-  height: 600px;
+  height: 500px;
+  background: ${COLORS.background};
+  padding: 20px;
+`;
+
+const AreaCenter = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default App;

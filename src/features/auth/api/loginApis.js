@@ -1,4 +1,4 @@
-import { firebaseAuth } from "../../../services/firebase";
+import { firebaseAuth, firebaseDatabase } from "../../../services/firebase";
 import { treaterCodeErrorFirebase } from "../../../utils/firebaseUtils";
 
 export const login = async (email, password) => {

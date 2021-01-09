@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import routesContext from "./RoutesContext";
 import { LoginScreen } from "../features/auth/screens/LoginScreen";
+import { DashboardScreen } from "../features/dashboard/screens/DashboardScreen";
 
 export const Routes = () => {
   const routes = useContext(routesContext);
@@ -13,8 +14,8 @@ export const Routes = () => {
 
   switch (routes.currentRoute) {
     case "/":
-      return <div>AUTENTICADO</div>;
+      return <DashboardScreen />;
     default:
-      return <div>ROTA NÃO ENCONTRADA</div>;
+      return <div>Ocorreu um erro</div>;
   }
 };
