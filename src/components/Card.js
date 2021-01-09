@@ -4,7 +4,14 @@ import COLORS from "../styles/colors";
 import { Text, SIZE, FONT_WEIGHT, getFontSize, getFontWeight } from "./Text";
 import { Button } from "./Button";
 
-export const Card = ({ style, icon, title, description, labelButton }) => {
+export const Card = ({
+  style,
+  icon,
+  title,
+  description,
+  labelButton,
+  onClick,
+}) => {
   return (
     <Container style={style}>
       <Text
@@ -28,6 +35,7 @@ export const Card = ({ style, icon, title, description, labelButton }) => {
       </Text>
 
       <Button
+        onClick={onClick}
         label={labelButton}
         style={{ width: "100%", height: "30px" }}
         styleButton={{

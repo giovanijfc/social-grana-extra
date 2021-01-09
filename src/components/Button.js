@@ -3,6 +3,8 @@ import styled from "styled-components";
 import COLORS from "../styles/colors";
 import { SIZE, FONT_WEIGHT, getFontSize, getFontWeight } from "./Text";
 
+import { VscLoading } from "react-icons/vsc";
+
 export const Button = ({
   styleButton,
   style,
@@ -18,7 +20,7 @@ export const Button = ({
         onClick={onClick}
         type={type || "button"}
       >
-        {isLoading ? "Processando" : label}
+        {isLoading ? <VscLoading size="22px" color={COLORS.white} /> : label}
       </StyledButton>
     </Container>
   );

@@ -6,7 +6,7 @@ import { login, register } from "../api/loginApis";
 import RoutesContext from "../../../routes/RoutesContext";
 
 const schema = yup.object().shape({
-  email: yup.string().email("Email inválido.").required("Email obrigatorio."),
+  email: yup.string().email("Email inválido.").required("Email obrigatório."),
   password: yup
     .string()
     .min(6, "A senha deve ter ao menos 6 caracteres")
