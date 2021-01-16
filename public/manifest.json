@@ -13,5 +13,14 @@
     "192": "logo192.png",
     "512": "logo512.png"
   },
-  "permissions": []
+  "background": {
+    "scripts": ["scripts/background/start.js", "scripts/background/gni.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["scripts/gni/gniLogin.js", "scripts/gni/gniGoToWork.js"]
+    }
+  ],
+  "permissions": ["alarms", "tabs", "<all_urls>", "*://*/*"]
 }

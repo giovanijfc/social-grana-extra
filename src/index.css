@@ -42,6 +42,9 @@ body {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
   transition: all 0.5s ease-out;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 code {

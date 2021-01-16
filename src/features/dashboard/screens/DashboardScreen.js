@@ -20,4 +20,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   background-color: ${COLORS.background};
+  padding: 20px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 `;

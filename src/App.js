@@ -1,32 +1,20 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { firebaseAuth } from "./services/firebase";
-import RoutesContext from "./routes/RoutesContext";
-import { useRoutes } from "./routes/useRoutes";
 import { Text, SIZE, FONT_WEIGHT } from "./components/Text";
-import { Routes } from "./routes/Routes";
+import { Routes } from "./Routes";
 import COLORS from "./styles/colors";
+import { useUserIsAuthenticated } from "./hooks/useUserIsAuthenticated";
+import AppContext from "./contexts/appContext";
 
 const App = () => {
-  const routes = useRoutes();
+  const userIsAuthenticated = useUserIsAuthenticated();
 
-  useLayoutEffect(() => {
-    const unsubscribeOnAuthStateChanged = firebaseAuth.onAuthStateChanged(
-      (user) => {
-        routes.setIsAuthenticated(Boolean(user));
-      }
-    );
-
-    return () => {
-      unsubscribeOnAuthStateChanged();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  console.log(userIsAuthenticated);
 
   return (
-    <RoutesContext.Provider value={{ ...routes }}>
+    <AppContext.Provider value={{ userIsAuthenticated }}>
       <Container>
-        {routes.isAuthenticated === undefined ? (
+        {userIsAuthenticated === undefined ? (
           <AreaCenter>
             <Text
               fontWeight={FONT_WEIGHT.bold}
@@ -40,15 +28,14 @@ const App = () => {
           <Routes />
         )}
       </Container>
-    </RoutesContext.Provider>
+    </AppContext.Provider>
   );
 };
 
 const Container = styled.div`
-  width: 600px;
-  height: 500px;
+  width: 800px;
+  height: 600px;
   background: ${COLORS.background};
-  padding: 20px;
 `;
 
 const AreaCenter = styled.div`

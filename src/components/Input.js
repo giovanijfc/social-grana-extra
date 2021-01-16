@@ -29,7 +29,7 @@ export const Input = forwardRef(
         {error && (
           <Text
             color={COLORS.errorDark}
-            fontWeight={FONT_WEIGHT.light}
+            fontWeight={FONT_WEIGHT.medium}
             size={SIZE.small}
             style={{ marginTop: "2px", marginLeft: "3px" }}
           >

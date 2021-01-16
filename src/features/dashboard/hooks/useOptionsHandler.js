@@ -1,21 +1,21 @@
-import { useContext } from "react";
-import RoutesContext from "../../../routes/RoutesContext";
+/* eslint-disable no-undef */
+
+import { useHistory } from "react-router-dom";
+import { start } from "../../executeActions/bot/start";
 
 export const useOptionsHandler = () => {
-  const { setCurrentRoute } = useContext(RoutesContext);
+  const history = useHistory();
 
   const navigateToExecute = () => {
-    console.log("TODO: NAVIGATE TO EXECUTE");
-    //setCurrentRoute()
+    start();
   };
 
   const navigateToPurchaseLicense = () => {
-    console.log("TODO: NAVIGATE TO PURCHASE LICENSE");
     //setCurrentRoute()
   };
 
   const navigateToEditAccounts = () => {
-    setCurrentRoute("/edit-accounts");
+    history.push("/edit-accounts");
   };
 
   return {

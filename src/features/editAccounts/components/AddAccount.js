@@ -17,21 +17,21 @@ export const AddAccount = () => {
           name="email"
           ref={register}
           error={errors?.email?.message}
-          style={{ width: "140px" }}
+          style={{ width: "23%" }}
           label="Email"
         />
         <Input
           name="password"
           ref={register}
           error={errors?.password?.message}
-          style={{ width: "135px" }}
+          style={{ width: "23%" }}
           label="Senha"
         />
         <Input
           name="nickname"
           ref={register}
           error={errors?.nickname?.message}
-          style={{ width: "135px" }}
+          style={{ width: "23%" }}
           label="Apelido"
         />
 
@@ -56,9 +56,8 @@ const Container = styled.div`
 
 const Form = styled.form`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 `;

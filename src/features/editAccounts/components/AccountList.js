@@ -9,6 +9,8 @@ import { CgPlayListRemove } from "react-icons/cg";
 export const AccountList = () => {
   const { accounts, isLoading, onClickRemoveAccount } = useAccountListHandler();
 
+  console.log(accounts);
+
   const hasZeroAccounts = accounts.length === 0;
 
   return (
@@ -97,9 +99,8 @@ const ContainerItem = styled.div`
 const Container = styled.div`
   display: flex;
   width: 100%;
-  height: 350px;
+  margin-top: 40px;
   flex-direction: column;
-  margin-top: 20px;
 `;
 
 const RemoveIcon = styled(CgPlayListRemove)`
@@ -111,7 +112,7 @@ const RemoveIcon = styled(CgPlayListRemove)`
 const WrapperList = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  max-height: 300px;
   justify-content: ${({ isCenter }) => (isCenter ? "center" : "flex-start")};
   align-items: center;
   flex-direction: column;

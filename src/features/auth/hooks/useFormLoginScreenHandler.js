@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState, useContext } from "react";
 import { login, register } from "../api/loginApis";
-import RoutesContext from "../../../routes/RoutesContext";
+import { useHistory } from "react-router-dom";
 
 const schema = yup.object().shape({
   email: yup.string().email("Email inválido.").required("Email obrigatório."),
@@ -23,7 +23,7 @@ export const useFormLoginScreenHandler = () => {
     defaultValues: { email: "", password: "" },
   });
 
-  const routes = useContext(RoutesContext);
+  const history = useHistory();
 
   const mySubmitHandler = async ({ email, password }) => {
     setIsLoading(true);
@@ -41,8 +41,7 @@ export const useFormLoginScreenHandler = () => {
   };
 
   const successAuthenticateHandler = () => {
-    routes.setIsAuthenticated(true);
-    routes.setCurrentRoute("/");
+    history.replace("/");
   };
 
   const onButtonPress = (button) => {

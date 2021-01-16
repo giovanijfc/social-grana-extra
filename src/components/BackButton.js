@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Button } from "./Button";
 
 import { BiArrowBack } from "react-icons/bi";
-import RoutesContext from "../routes/RoutesContext";
+import { useHistory } from "react-router-dom";
 
 export const BackButton = () => {
-  const { setCurrentRoute } = useContext(RoutesContext);
+  const history = useHistory();
 
   const onClickBackHandler = () => {
-    setCurrentRoute("/");
+    history.goBack();
   };
 
   return (

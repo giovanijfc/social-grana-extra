@@ -21,4 +21,8 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${COLORS.background};
+  padding: 20px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 `;
