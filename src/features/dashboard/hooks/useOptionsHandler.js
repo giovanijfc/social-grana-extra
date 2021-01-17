@@ -7,7 +7,7 @@ export const useOptionsHandler = () => {
   const history = useHistory();
 
   const navigateToExecute = () => {
-    start();
+    history.push("/execute-actions");
   };
 
   const navigateToPurchaseLicense = () => {

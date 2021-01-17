@@ -5,14 +5,14 @@ import { Routes } from "./Routes";
 import COLORS from "./styles/colors";
 import { useUserIsAuthenticated } from "./hooks/useUserIsAuthenticated";
 import AppContext from "./contexts/appContext";
+import { useWindowRunBot } from "./hooks/useWindowRunBot";
 
 const App = () => {
   const userIsAuthenticated = useUserIsAuthenticated();
-
-  console.log(userIsAuthenticated);
+  const windowRunBot = useWindowRunBot();
 
   return (
-    <AppContext.Provider value={{ userIsAuthenticated }}>
+    <AppContext.Provider value={{ userIsAuthenticated, ...windowRunBot }}>
       <Container>
         {userIsAuthenticated === undefined ? (
           <AreaCenter>

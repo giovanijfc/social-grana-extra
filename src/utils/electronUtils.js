@@ -6,6 +6,8 @@ export const createBrowserWindow = (url) => {
   const win = new remote.BrowserWindow({
     height,
     width,
+    center: true,
+    maximizable: true,
   });
 
   win.loadURL(url);
