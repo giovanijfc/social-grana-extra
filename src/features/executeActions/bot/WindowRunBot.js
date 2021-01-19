@@ -1,6 +1,11 @@
 export class WindowRunBot {
   _instance = undefined;
   window = undefined;
+  accounts = undefined;
+  auth = {
+    email: "",
+    password: "",
+  };
 
   constructor() {
     if (!WindowRunBot._instance) {
@@ -14,12 +19,42 @@ export class WindowRunBot {
     return new WindowRunBot();
   }
 
-  click(element) {
-    this.window.focus();
+  async executeScript(script, eviteFocus) {
+    !eviteFocus && this.window.focus();
+    const value = await this.window.webContents.executeJavaScript(script);
+
+    return value;
   }
 
-  async executeScript(script) {
-    this.window.focus();
-    await this.window.webContents.executeJavaScript(script);
+  async querySelector(selector, field, eviteFocus) {
+    console.log(`document.querySelector("${selector}").${field}`);
+    const fieldValue = await this.executeScript(
+      `document.querySelector("${selector}").${field}`,
+      eviteFocus
+    ).catch((error) =>
+      console.log("QuerySelector->ExecuteJavascriptError ", error)
+    );
+
+    return fieldValue;
+  }
+
+  async getFieldById(id, field, eviteFocus) {
+    console.log(`document.querySelector("${id}").${field}`);
+    const fieldValue = await this.executeScript(
+      `document.getElementById("${id}")?.${field}`,
+      eviteFocus
+    ).catch((error) =>
+      console.log("QuerySelector->ExecuteJavascriptError ", error)
+    );
+
+    return fieldValue;
+  }
+
+  async getIsLoading() {
+    const isLoading = await this.window.webContents.executeJavaScript(
+      `document.readyState`
+    );
+
+    return isLoading;
   }
 }

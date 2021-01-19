@@ -5,17 +5,14 @@ import { WindowRunBot } from "./WindowRunBot";
 const WindowRunBotInstance = WindowRunBot.getInstance();
 
 const createWindowRun = async (setWindowRunBot) => {
-  const browserWindow = createBrowserWindow(
+  const browserWindow = await createBrowserWindow(
     "https://www.ganharnoinsta.com/painel/"
   );
 
   setWindowRunBot(browserWindow);
   WindowRunBotInstance.window = browserWindow;
 
-  browserWindow.webContents.once("did-finish-load", () => {
-    console.log("carregou");
-    startGNI();
-  });
+  startGNI();
 };
 
 export const start = async (setWindowRunBot) => {

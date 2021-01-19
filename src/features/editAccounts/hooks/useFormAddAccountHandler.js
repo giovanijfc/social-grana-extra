@@ -5,7 +5,7 @@ import { useState } from "react";
 import { addAccount } from "../api/editAccountsApis";
 
 const schema = yup.object().shape({
-  email: yup.string().email("Email inválido.").required("Email obrigatório."),
+  email: yup.string().required("Email obrigatório."),
   password: yup.string().required("Senha obrigatório."),
   nickname: yup.string().required("Apelido obrigatório."),
 });

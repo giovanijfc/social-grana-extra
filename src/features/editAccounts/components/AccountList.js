@@ -9,8 +9,6 @@ import { CgPlayListRemove } from "react-icons/cg";
 export const AccountList = () => {
   const { accounts, isLoading, onClickRemoveAccount } = useAccountListHandler();
 
-  console.log(accounts);
-
   const hasZeroAccounts = accounts.length === 0;
 
   return (
