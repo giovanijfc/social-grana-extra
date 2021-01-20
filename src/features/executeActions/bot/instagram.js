@@ -38,7 +38,6 @@ const login = async (account) => {
     await WindowRunBotInstance.window.loadURL("https://www.instagram.com/");
     await WindowRunBotInstance.executeScript(loginScript);
     WindowRunBotInstance.window.webContents.once("did-finish-load", () => {
-      console.log("finish loading login in instagram");
       resolve();
     });
   });

@@ -4,7 +4,7 @@ import COLORS from "../styles/colors";
 import { getFontSize, getFontWeight, SIZE, FONT_WEIGHT, Text } from "./Text";
 
 export const Input = forwardRef(
-  ({ style, label, type, maxLength, error, name }, ref) => {
+  ({ style, label, type, maxLength, error, name, placeholder }, ref) => {
     return (
       <Container style={style}>
         <ContainerInput>
@@ -22,6 +22,7 @@ export const Input = forwardRef(
               ref={ref}
               maxLength={maxLength}
               type={type}
+              placeholder={placeholder}
             />
           </WrapperInput>
         </ContainerInput>

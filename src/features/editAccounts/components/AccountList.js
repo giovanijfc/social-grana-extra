@@ -35,6 +35,7 @@ export const AccountList = () => {
         ) : (
           accounts.map((item, index) => (
             <AccountItem
+              key={`account-${index}`}
               onClick={onClickRemoveAccount}
               {...item}
               index={index}

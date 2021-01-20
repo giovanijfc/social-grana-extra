@@ -2,10 +2,7 @@ export class WindowRunBot {
   _instance = undefined;
   window = undefined;
   accounts = undefined;
-  auth = {
-    email: "",
-    password: "",
-  };
+  config = undefined;
 
   constructor() {
     if (!WindowRunBot._instance) {
@@ -27,25 +24,19 @@ export class WindowRunBot {
   }
 
   async querySelector(selector, field, eviteFocus) {
-    console.log(`document.querySelector("${selector}").${field}`);
     const fieldValue = await this.executeScript(
       `document.querySelector("${selector}").${field}`,
       eviteFocus
-    ).catch((error) =>
-      console.log("QuerySelector->ExecuteJavascriptError ", error)
-    );
+    ).catch((error) => null);
 
     return fieldValue;
   }
 
   async getFieldById(id, field, eviteFocus) {
-    console.log(`document.querySelector("${id}").${field}`);
     const fieldValue = await this.executeScript(
       `document.getElementById("${id}")?.${field}`,
       eviteFocus
-    ).catch((error) =>
-      console.log("QuerySelector->ExecuteJavascriptError ", error)
-    );
+    ).catch((error) => null);
 
     return fieldValue;
   }

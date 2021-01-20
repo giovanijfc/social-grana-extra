@@ -1,20 +1,10 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import COLORS from "../../../styles/colors";
 import { Header } from "../components/Header";
 import { Options } from "../components/Options";
-import { listenerAccounts } from "../../editAccounts/api/editAccountsApis";
-import { WindowRunBot } from "../../executeActions/bot/WindowRunBot";
-
-const WindowRunBotInstance = WindowRunBot.getInstance();
 
 export const DashboardScreen = () => {
-  useLayoutEffect(() => {
-    listenerAccounts((accounts) => {
-      WindowRunBotInstance.accounts = accounts.values;
-    });
-  }, []);
-
   return (
     <Container>
       <Header />

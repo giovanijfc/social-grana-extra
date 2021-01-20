@@ -2,8 +2,10 @@ import { WindowRunBot } from "./WindowRunBot";
 import { instagram } from "./instagram";
 import { createBrowserWindow } from "../../../utils/electronUtils";
 import { sleep } from "../../../utils/sleep";
+import { addMinutes, isBefore } from "date-fns";
 
 const WindowRunBotInstance = WindowRunBot.getInstance();
+let isRunWorks = false;
 
 export const startGNI = async () => {
   let alreadyShowModal = false;
@@ -12,6 +14,7 @@ export const startGNI = async () => {
   WindowRunBotInstance.window.on("close", () => {
     startInterval && clearInterval(startInterval);
     startInterval = undefined;
+    isRunWorks = false;
   });
 
   startInterval = setInterval(async () => {
@@ -36,6 +39,7 @@ export const startGNI = async () => {
       startInterval && clearInterval(startInterval);
       startInterval = undefined;
       await goToRealizeActions();
+      isRunWorks = true;
       await startWorks();
     } else if (notLogged && !alreadyShowModal) {
       const { remote } = require("electron");
@@ -49,53 +53,60 @@ export const startGNI = async () => {
 };
 
 const goToRealizeActions = async () => {
-  console.log("Indo para Realizar ações");
   await WindowRunBotInstance.window.loadURL(
     "https://www.ganharnoinsta.com/painel/?pagina=sistema"
   );
 };
 
 const startWorks = async () => {
-  console.log("Começando a ganhar");
-  for (const account of WindowRunBotInstance.accounts) {
-    await instagram.login(account);
+  while (isRunWorks) {
+    const accountsAvailable = getAccountsAvailable();
 
-    await WindowRunBotInstance.window.loadURL(
-      "https://www.ganharnoinsta.com/painel/?pagina=sistema"
-    );
+    for (const account of accountsAvailable) {
+      console.log("Indo seguir com ", account.nickname);
 
-    const scriptSelectAccount = `
-      var selectAccounts = document.getElementById("contaig").options;
+      await instagram.login(account);
 
-      for (let position = 0; position < selectAccounts.length; position++) {
-        const option = selectAccounts[position];
+      await WindowRunBotInstance.window.loadURL(
+        "https://www.ganharnoinsta.com/painel/?pagina=sistema"
+      );
 
-        if (option.text === "${account.nickname}") {
-          selectAccounts.selectedIndex = position;
-          document.getElementById("playsound").checked = false;
-          document.getElementById("autorefresh").checked = false;
-        } 
-      }
-    `;
+      const scriptSelectAccount = `
+        var selectAccounts = document.getElementById("contaig").options;
+  
+        for (let position = 0; position < selectAccounts.length; position++) {
+          const option = selectAccounts[position];
+  
+          if (option.text === "${account.nickname}") {
+            selectAccounts.selectedIndex = position;
+            document.getElementById("playsound").checked = false;
+            document.getElementById("autorefresh").checked = false;
+          } 
+        }
+      `;
 
-    await WindowRunBotInstance.executeScript(scriptSelectAccount);
+      await WindowRunBotInstance.executeScript(scriptSelectAccount);
 
-    await sleep(1000);
+      await sleep(1000);
 
-    await flowFollow();
+      await flowFollow(account);
+    }
+
+    await sleep(5000);
   }
 };
 
-const flowFollow = async () => {
+const flowFollow = async (account) => {
   const scriptStartFollow = `
     document.querySelector("button[type='submit']").click();
   `;
   await WindowRunBotInstance.executeScript(scriptStartFollow);
 
-  // Quantidade de vezes que é pra seguir com a mesma conta
-  for (let count = 0; count < 3; count++) {
-    await sleep(2000);
+  for (
+    let count = 1;
+    count <= WindowRunBotInstance.config.numberFollowInEachAccount;
 
+  ) {
     await new Promise((resolve) => {
       let intervalCheckHaveNewTask;
 
@@ -115,13 +126,17 @@ const flowFollow = async () => {
           intervalCheckHaveNewTask = undefined;
           resolve();
         }
-      }, 4000);
+      }, 7000);
     });
 
     const accountInstagramURL = await WindowRunBotInstance.getFieldById(
       "btn-acessar",
       "href"
     );
+
+    if (!accountInstagramURL) {
+      continue;
+    }
 
     await sleep(2000);
 
@@ -131,21 +146,33 @@ const flowFollow = async () => {
       800
     );
 
-    // TODO: TEMPO DE ESPERA ANTES DE SEGUIR
-    await sleep(5000);
+    await sleep(WindowRunBotInstance.config.timeSleepBeforeFollow * 1000);
     await instagram.follow(winAccountInstagram);
-    // TODO: TEMPO DE ESPERA DEPOIS DE SEGUIR
-    await sleep(5000);
+    await sleep(WindowRunBotInstance.config.timeSleepAfterFollow * 1000);
 
     winAccountInstagram.close();
 
     await sleep(3000);
 
     const scriptConfirmFollow = `
-     document.getElementById("btn-confirmar").click();
-  `;
+      document.getElementById("btn-confirmar").click();
+    `;
     await WindowRunBotInstance.executeScript(scriptConfirmFollow);
-
+    console.log("Seguiu ", count, "  ", account.nickname);
+    count++;
     await sleep(3000);
   }
+
+  account.lastDateFlowFollow = addMinutes(
+    new Date(),
+    WindowRunBotInstance.config.timeAwaitAfterFlowFollow
+  );
+};
+
+const getAccountsAvailable = () => {
+  const accountsAvailable = WindowRunBotInstance.accounts.filter((account) => {
+    return isBefore(account.lastDateFlowFollow, new Date());
+  });
+
+  return accountsAvailable;
 };

@@ -33,8 +33,8 @@ const App = () => {
 };
 
 const Container = styled.div`
-  width: 800px;
-  height: 600px;
+  width: 1200px;
+  height: 800px;
   background: ${COLORS.background};
 `;
 
